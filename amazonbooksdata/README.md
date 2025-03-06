@@ -1,0 +1,1 @@
+Source Amazon Books data, install Airflow and PGAdmin on a Docker container, use Aitflow to schedule Extract, Transform, and Load (ETL) of Amazon Books data into a Postgres SQL database. 
