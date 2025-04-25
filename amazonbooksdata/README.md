@@ -11,5 +11,14 @@ c. Initialize database: docker compose up airflow-init
 If docker doesn't exist: brew install docker
 
 d. Check localhost:8080
-e. Get pg-admin to run Postgres on Docker container
+e. Get pg-admin to run Postgres on Docker container - add details for pg-admin in the yml file, check localhost:5050
+f. When registering server in Postgres, do docker ls and get the associated ID, and then docker inspect <ID>
+g. Add amazonbooks database
+h. Go to Airflow, add connection to new database we created. 
+
+
+
+1. Install Airlow on Docker
+2. Install Postgres and PgAdmin on DockerPgAdmin on Docker
+3. Create a DAG
 
