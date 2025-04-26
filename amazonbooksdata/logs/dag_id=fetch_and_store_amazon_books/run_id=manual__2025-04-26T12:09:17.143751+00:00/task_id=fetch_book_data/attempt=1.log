@@ -1,0 +1,32 @@
+[2025-04-26T12:09:20.112+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-04-26T12:09:20.123+0000] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: fetch_and_store_amazon_books.fetch_book_data manual__2025-04-26T12:09:17.143751+00:00 [queued]>
+[2025-04-26T12:09:20.127+0000] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: fetch_and_store_amazon_books.fetch_book_data manual__2025-04-26T12:09:17.143751+00:00 [queued]>
+[2025-04-26T12:09:20.127+0000] {taskinstance.py:2867} INFO - Starting attempt 1 of 2
+[2025-04-26T12:09:20.133+0000] {taskinstance.py:2890} INFO - Executing <Task(PythonOperator): fetch_book_data> on 2025-04-26 12:09:17.143751+00:00
+[2025-04-26T12:09:20.151+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=998) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2025-04-26T12:09:20.156+0000] {standard_task_runner.py:72} INFO - Started process 999 to run task
+[2025-04-26T12:09:20.157+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'fetch_and_store_amazon_books', 'fetch_book_data', 'manual__2025-04-26T12:09:17.143751+00:00', '--job-id', '33', '--raw', '--subdir', 'DAGS_FOLDER/dag.py', '--cfg-path', '/tmp/tmpb1isjrtf']
+[2025-04-26T12:09:20.162+0000] {standard_task_runner.py:105} INFO - Job 33: Subtask fetch_book_data
+[2025-04-26T12:09:20.213+0000] {task_command.py:467} INFO - Running <TaskInstance: fetch_and_store_amazon_books.fetch_book_data manual__2025-04-26T12:09:17.143751+00:00 [running]> on host 8126dadb0889
+[2025-04-26T12:09:20.261+0000] {taskinstance.py:3134} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='fetch_and_store_amazon_books' AIRFLOW_CTX_TASK_ID='fetch_book_data' AIRFLOW_CTX_EXECUTION_DATE='2025-04-26T12:09:17.143751+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-04-26T12:09:17.143751+00:00'
+[2025-04-26T12:09:20.262+0000] {logging_mixin.py:190} INFO - Task instance is in running state
+[2025-04-26T12:09:20.262+0000] {logging_mixin.py:190} INFO -  Previous state of the Task instance: queued
+[2025-04-26T12:09:20.262+0000] {logging_mixin.py:190} INFO - Current task name:fetch_book_data state:running start_date:2025-04-26 12:09:20.123999+00:00
+[2025-04-26T12:09:20.263+0000] {logging_mixin.py:190} INFO - Dag name:fetch_and_store_amazon_books and current dag run status:running
+[2025-04-26T12:09:20.263+0000] {taskinstance.py:732} INFO - ::endgroup::
+[2025-04-26T12:09:20.425+0000] {logging_mixin.py:190} INFO - Failed to retrieve the page
+[2025-04-26T12:09:20.440+0000] {logging_mixin.py:190} INFO - Empty DataFrame
+Columns: []
+Index: []
+[2025-04-26T12:09:20.448+0000] {python.py:240} INFO - Done. Returned value was: None
+[2025-04-26T12:09:20.455+0000] {taskinstance.py:341} INFO - ::group::Post task execution logs
+[2025-04-26T12:09:20.455+0000] {taskinstance.py:353} INFO - Marking task as SUCCESS. dag_id=fetch_and_store_amazon_books, task_id=fetch_book_data, run_id=manual__2025-04-26T12:09:17.143751+00:00, execution_date=20250426T120917, start_date=20250426T120920, end_date=20250426T120920
+[2025-04-26T12:09:20.473+0000] {logging_mixin.py:190} INFO - Task instance in success state
+[2025-04-26T12:09:20.474+0000] {logging_mixin.py:190} INFO -  Previous state of the Task instance: running
+[2025-04-26T12:09:20.474+0000] {logging_mixin.py:190} INFO - Dag name:fetch_and_store_amazon_books queued_at:2025-04-26 12:09:17.212065+00:00
+[2025-04-26T12:09:20.474+0000] {logging_mixin.py:190} INFO - Task hostname:8126dadb0889 operator:PythonOperator
+[2025-04-26T12:09:20.516+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2025-04-26T12:09:20.541+0000] {taskinstance.py:3901} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-04-26T12:09:20.542+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

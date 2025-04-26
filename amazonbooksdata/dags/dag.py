@@ -5,19 +5,20 @@
 
 from airflow import DAG
 from datetime import datetime, timedelta
+import time, random
 import requests
 import pandas as pd
 from bs4 import BeautifulSoup
 from airflow.operators.python import PythonOperator
-from airflow.providers.postgres.operators.postgres import PostgresOperator
-from airflow.providers.postgres.hooks.postgres import PostgresHook
+from airflow.providers.common.sql.operators.sql import SQLExecuteQueryOperator
+
 
 headers = {
     "Referer": 'https://www.amazon.com/',
-    "Sec-Ch-Ua": "Not_A Brand",
-    "Sec-Ch-Ua-Mobile": "?0",
-    "Sec-Ch-Ua-Platform": "macOS",
-    'User-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                      "AppleWebKit/537.36 (KHTML, like Gecko) "
+                      "Chrome/117.0.0.0 Safari/537.36",
+        "Accept-Language": "en-US,en;q=0.9",
 }
 default_args = {
     'owner': 'airflow',
@@ -55,38 +56,45 @@ def get_amazon_data_books(num_books, ti):
             # Parse the content of the request with BeautifulSoup
             soup = BeautifulSoup(response.content, "html.parser")
             
-            # Find book containers (you may need to adjust the class names based on the actual HTML structure)
-            book_containers = soup.find_all("div", {"class": "s-result-item"})
+            # Find book containers 
+            book_containers = soup.find_all("div", {"class": "s-result-item", "data-component-type": "s-search-result"})
             
             # Loop through the book containers and extract data
             for book in book_containers:
                 title = book.find("span", {"class": "a-text-normal"})
-                author = book.find("a", {"class": "a-size-base"})
+                author = book.find("a", {"class": "a-link-normal"}) 
                 price = book.find("span", {"class": "a-price-whole"})
                 rating = book.find("span", {"class": "a-icon-alt"})
-                if title and author and price and rating:
-                    book_title = title.text.strip()
+                
+                book_title = title.get_text(strip=True) if title else "N/A"
+                book_author = author.get_text(strip=True) if author else "N/A"
+                book_price = price.get_text(strip=True) if price else "N/A"
+                book_rating = rating.get_text(strip=True) if rating else "N/A"
                     
-                    # Check if title has been seen before
-                    if book_title not in seen_titles:
+                # Check if title has been seen before
+                if book_title!="N/A" and book_title not in seen_titles:
                         seen_titles.add(book_title)
                         books.append({
                             "Title": book_title,
-                            "Author": author.text.strip(),
-                            "Price": price.text.strip(),
-                            "Rating": rating.text.strip(),
+                            "Author": book_author,
+                            "Price": book_price,
+                            "Rating": book_rating,
                         })
                                     # Increment the page number for the next iteration
             page += 1
+            # Random short sleep to avoid being detected as a bot
+            time.sleep(random.uniform(1, 3))
         else:
             print("Failed to retrieve the page")
             break
 
     # Limit to the requested number of books
+        
     books = books[:num_books]
     
     # Convert the list of dictionaries into a DataFrame
     df = pd.DataFrame(books)
+    print(df)
         
     # Remove duplicates based on 'Title' column
     df.drop_duplicates(subset="Title", inplace=True)
@@ -98,17 +106,23 @@ def get_amazon_data_books(num_books, ti):
     #3) create and store data in table on postgres (load)
     
 def insert_book_data_into_postgres(ti):
+    #Pull the books data
     book_data = ti.xcom_pull(key='book_data', task_ids='fetch_book_data')
     if not book_data:
         raise ValueError("No book data found")
 
-    postgres_hook = PostgresHook(postgres_conn_id='books_connection')
-    insert_query = """
-    INSERT INTO books (title, authors, price, rating)
-    VALUES (%s, %s, %s, %s)
-    """
-    for book in book_data:
-        postgres_hook.run(insert_query, parameters=(book['Title'], book['Author'], book['Price'], book['Rating']))
+    insert_books = SQLExecuteQueryOperator(
+    task_id='insert_books',
+    conn_id='books_connection',
+    sql="""
+        INSERT INTO books (title, authors, price, rating)
+        VALUES (%s, %s, %s, %s)
+    """,
+    parameters=[
+        (book['Title'], book['Author'], book['Price'], book['Rating'])
+        for book in book_data
+    ],
+    )
 
 #tasks
 fetch_book_data_task = PythonOperator(
@@ -118,9 +132,9 @@ fetch_book_data_task = PythonOperator(
     dag=dag,
 
 )
-create_table_task = PostgresOperator(
+create_table_task = SQLExecuteQueryOperator(
     task_id='create_table',
-    postgres_conn_id='books_connection',
+    conn_id='books_connection',
     sql="""
     CREATE TABLE IF NOT EXISTS books (
         id SERIAL PRIMARY KEY,
