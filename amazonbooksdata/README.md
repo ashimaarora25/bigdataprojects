@@ -2,10 +2,10 @@ Amazon Books Data Pipeline with Airflow + Docker + Postgres
 
 This project builds an end-to-end data pipeline that:
 
-    i.  Fetches Amazon Data Engineering books via web scraping (Extract)
-    ii. Stores the cleaned data into a PostgreSQL database (Transform + Load)
-    iii.Runs Apache Airflow DAGs to automate the flow 
-    iv. All running inside Docker containers for easy setup
+    1. Fetches Amazon Data Engineering books via web scraping (Extract)
+    2. Stores the cleaned data into a PostgreSQL database (Transform + Load)
+    3. Runs Apache Airflow DAGs to automate the flow 
+    4. The entire project setup runs inside Docker containers for easy setup
 
 Tech Stack Used: 
 
@@ -35,7 +35,8 @@ Setup Instructions:
     Turn on and manually trigger the fetch_and_store_amazon_books DAG from the Airflow UI.
 
 5. Check your Postgres DB
-    Connect to your Postgres container/database and check the books table under amazon_books database.
+    Connect to your Postgres database at http://localhost:5050, and check the books table under amazon_books database.
+
 
 Other details: 
 
