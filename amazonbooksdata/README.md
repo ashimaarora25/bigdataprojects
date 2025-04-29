@@ -41,15 +41,14 @@ Setup Instructions:
 Other details: 
 
 Creating and activating Virtual Env:  
-
-   python3 -m venv venv
-   source venv/bin
+    python3 -m venv venv    
+    source venv/bin
 
 Deploying  Airflow on Docker Compose: 
 
-https://airflow.apache.org/docs/apache-airflow/stable/howto/docker-compose/index.html
+    https://airflow.apache.org/docs/apache-airflow/stable/howto/docker-compose/index.html
 
 Acknowledgements:
 
-This project was inspired by the below video by Sunjana in Data
- https://www.youtube.com/watch?v=3xyoM28B40Y
+    This project was inspired by the below video by Sunjana in Data
+     https://www.youtube.com/watch?v=3xyoM28B40Y
