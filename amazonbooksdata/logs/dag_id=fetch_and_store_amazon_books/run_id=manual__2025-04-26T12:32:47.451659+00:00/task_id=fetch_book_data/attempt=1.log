@@ -1,0 +1,31 @@
+[2025-04-26T12:32:51.673+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-04-26T12:32:51.679+0000] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: fetch_and_store_amazon_books.fetch_book_data manual__2025-04-26T12:32:47.451659+00:00 [queued]>
+[2025-04-26T12:32:51.682+0000] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: fetch_and_store_amazon_books.fetch_book_data manual__2025-04-26T12:32:47.451659+00:00 [queued]>
+[2025-04-26T12:32:51.682+0000] {taskinstance.py:2867} INFO - Starting attempt 1 of 2
+[2025-04-26T12:32:51.687+0000] {taskinstance.py:2890} INFO - Executing <Task(PythonOperator): fetch_book_data> on 2025-04-26 12:32:47.451659+00:00
+[2025-04-26T12:32:51.699+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'fetch_and_store_amazon_books', 'fetch_book_data', 'manual__2025-04-26T12:32:47.451659+00:00', '--job-id', '37', '--raw', '--subdir', 'DAGS_FOLDER/dag.py', '--cfg-path', '/tmp/tmp747_rw_g']
+[2025-04-26T12:32:51.700+0000] {standard_task_runner.py:105} INFO - Job 37: Subtask fetch_book_data
+[2025-04-26T12:32:51.706+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=1317) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2025-04-26T12:32:51.708+0000] {standard_task_runner.py:72} INFO - Started process 1318 to run task
+[2025-04-26T12:32:51.722+0000] {task_command.py:467} INFO - Running <TaskInstance: fetch_and_store_amazon_books.fetch_book_data manual__2025-04-26T12:32:47.451659+00:00 [running]> on host 8126dadb0889
+[2025-04-26T12:32:51.749+0000] {taskinstance.py:3134} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='fetch_and_store_amazon_books' AIRFLOW_CTX_TASK_ID='fetch_book_data' AIRFLOW_CTX_EXECUTION_DATE='2025-04-26T12:32:47.451659+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-04-26T12:32:47.451659+00:00'
+[2025-04-26T12:32:51.750+0000] {logging_mixin.py:190} INFO - Task instance is in running state
+[2025-04-26T12:32:51.751+0000] {logging_mixin.py:190} INFO -  Previous state of the Task instance: queued
+[2025-04-26T12:32:51.751+0000] {logging_mixin.py:190} INFO - Current task name:fetch_book_data state:running start_date:2025-04-26 12:32:51.679727+00:00
+[2025-04-26T12:32:51.751+0000] {logging_mixin.py:190} INFO - Dag name:fetch_and_store_amazon_books and current dag run status:running
+[2025-04-26T12:32:51.751+0000] {taskinstance.py:732} INFO - ::endgroup::
+[2025-04-26T12:32:51.751+0000] {logging_mixin.py:190} INFO - Fetching page 1... https://www.amazon.com/s?k=data+engineering+books&page=1
+[2025-04-26T12:32:52.038+0000] {logging_mixin.py:190} INFO - Failed to fetch page 1. Status code: 503
+[2025-04-26T12:32:52.038+0000] {logging_mixin.py:190} INFO - No books found.
+[2025-04-26T12:32:52.039+0000] {python.py:240} INFO - Done. Returned value was: None
+[2025-04-26T12:32:52.047+0000] {taskinstance.py:341} INFO - ::group::Post task execution logs
+[2025-04-26T12:32:52.048+0000] {taskinstance.py:353} INFO - Marking task as SUCCESS. dag_id=fetch_and_store_amazon_books, task_id=fetch_book_data, run_id=manual__2025-04-26T12:32:47.451659+00:00, execution_date=20250426T123247, start_date=20250426T123251, end_date=20250426T123252
+[2025-04-26T12:32:52.059+0000] {logging_mixin.py:190} INFO - Task instance in success state
+[2025-04-26T12:32:52.060+0000] {logging_mixin.py:190} INFO -  Previous state of the Task instance: running
+[2025-04-26T12:32:52.060+0000] {logging_mixin.py:190} INFO - Dag name:fetch_and_store_amazon_books queued_at:2025-04-26 12:32:47.490731+00:00
+[2025-04-26T12:32:52.060+0000] {logging_mixin.py:190} INFO - Task hostname:8126dadb0889 operator:PythonOperator
+[2025-04-26T12:32:52.099+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2025-04-26T12:32:52.122+0000] {taskinstance.py:3901} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2025-04-26T12:32:52.123+0000] {local_task_job_runner.py:245} INFO - ::endgroup::
