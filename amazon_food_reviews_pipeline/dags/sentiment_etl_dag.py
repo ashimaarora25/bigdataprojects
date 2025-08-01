@@ -29,9 +29,19 @@ df = kagglehub.dataset_load(
 )
 
 def extract_daily_sample(df):
+    """
+    This function samples 500 rows from the entire Reviews data to simulate daily reviews data, and stores it in daily_sample.csv
+    """
     df_sample = df.sample(n=500, random_state=random.randint(1, 1000))
     df_sample.to_csv(temp_daily_path, index=False)
     print(df_sample.head())
+
+def transform_reviews():
+    df = pd.read_csv(temp_daily_path)
+    df.dropna(subset=['Text'], inplace=True)
+    df['Text'] = df['Text'].str.strip()
+    df['Text'] = df['Text'].str.replace(r'\s+', ' ', regex=True)
+    df.to_csv(temp_daily_path, index=False)
 
 #print("First 5 records:\n", df.head())
 
